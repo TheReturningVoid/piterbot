@@ -1,0 +1,181 @@
+<html>
+<head>
+  <title>piterbot - logs</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" href="http://bootswatch.com/slate/bootstrap.min.css" />
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/jquery.min.js"></script>
+  <style>
+    body {
+      padding-top: 70px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar-default navbar navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#top-navbar-collapse" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar" />
+          <span class="icon-bar" />
+          <span class="icon-bar" />
+        </button>
+        <a class="navbar-brand" href="/">Piterbot</a>
+      </div>
+      <div class="navbar-collapse collapse" id="top-navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="/">Logs</a></li>
+          <li class="active"><a href="#">Settings</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <div id="alert-space"></div>
+    <h1>Piterbot Control Panel</h1>
+    <h3>Settings</h3>
+    <h4>Keys</h4>
+    <div class="form-horizontal">
+      <div class="form-group">
+        <div class="row">
+          <label class="col-sm-2 control-label" for="apikey-discord">Discord API Key: </label>
+          <div class="col-sm-10">
+            <div class="input-group">
+              <input type="password" class="form-control" id="apikey-discord" />
+              <span class="input-group-btn">
+                <buton class="btn btn-default" type="button" id="hide1"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;</button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <label class="col-sm-2 control-label" for="apikey-google">Google API Key: </label>
+          <div class="col-sm-10">
+            <div class="input-group">
+              <input type="password" class="form-control" id="apikey-google" />
+              <span class="input-group-btn">
+                <buton class="btn btn-default" type="button" id="hide2"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;</button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <label class="col-sm-2 control-label" for="apikey-twitter-consumer">Twitter Consumer Key: </label>
+          <div class="col-sm-10">
+            <div class="input-group">
+              <input type="password" class="form-control" id="apikey-twitter-consumer" />
+              <span class="input-group-btn">
+                <buton class="btn btn-default" type="button" id="hide3"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;</button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <label class="col-sm-2 control-label" for="apikey-twitter-secret">Twitter Consumer Secret: </label>
+          <div class="col-sm-10">
+            <div class="input-group">
+              <input type="password" class="form-control" id="apikey-twitter-secret" />
+              <span class="input-group-btn">
+                <buton class="btn btn-default" type="button" id="hide4"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;</button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <label class="col-sm-2 control-label" for="apikey-twitter-bearer">Twitter Bearer Token: </label>
+          <div class="col-sm-10">
+            <div class="input-group">
+              <input type="password" class="form-control" id="apikey-twitter-bearer" />
+              <span class="input-group-btn">
+                <buton class="btn btn-default" type="button" id="hide5"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;</button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary" id="submit-keys" type="button">Save Keys</button>
+  </div>
+  <script>
+    $("#hide1").click(() => {
+      if ($("#apikey-discord").attr("type") === "password") {
+        $("#apikey-discord").attr("type", "text")
+        $("#hide1").attr("class", "btn btn-default active")
+      } else {
+        $("#apikey-discord").attr("type", "password")
+        $("#hide1").attr("class", "btn btn-default")
+      }
+    })
+    $("#hide2").click(() => {
+      if ($("#apikey-google").attr("type") === "password") {
+        $("#apikey-google").attr("type", "text")
+        $("#hide2").attr("class", "btn btn-default active")
+      } else {
+        $("#apikey-google").attr("type", "password")
+        $("#hide2").attr("class", "btn btn-default")
+      }
+    })
+    $("#hide3").click(() => {
+      if ($("#apikey-twitter-consumer").attr("type") === "password") {
+        $("#apikey-twitter-consumer").attr("type", "text")
+        $("#hide3").attr("class", "btn btn-default active")
+      } else {
+        $("#apikey-twitter-consumer").attr("type", "password")
+        $("#hide3").attr("class", "btn btn-default")
+      }
+    })
+    $("#hide4").click(() => {
+      if ($("#apikey-twitter-secret").attr("type") === "password") {
+        $("#apikey-twitter-secret").attr("type", "text")
+        $("#hide4").attr("class", "btn btn-default active")
+      } else {
+        $("#apikey-twitter-secret").attr("type", "password")
+        $("#hide4").attr("class", "btn btn-default")
+      }
+    })
+    $("#hide5").click(() => {
+      if ($("#apikey-twitter-bearer").attr("type") === "password") {
+        $("#apikey-twitter-bearer").attr("type", "text")
+        $("#hide5").attr("class", "btn btn-default active")
+      } else {
+        $("#apikey-twitter-bearer").attr("type", "password")
+        $("#hide5").attr("class", "btn btn-default")
+      }
+    })
+
+    var socket = io()
+    socket.emit("piterbot_query_keys", 0)
+    socket.on("piterbot_key_info", (keys) => {
+      $("#apikey-discord").val(keys.discord)
+      $("#apikey-google").val(keys.google)
+      $("#apikey-twitter-consumer").val(keys.twitterConsumer)
+      $("#apikey-twitter-secret").val(keys.twitterSecret)
+      $("#apikey-twitter-bearer").val(keys.twitterBearer)
+    })
+
+    $("#submit-keys").click(() => {
+      socket.emit("piterbot_update_keys", {
+        discord: $("#apikey-discord").val(),
+        google: $("#apikey-google").val(),
+        twitterConsumer: $("#apikey-twitter-consumer").val(),
+        twitterSecret: $("#apikey-twitter-secret").val(),
+        twitterBearer: $("#apikey-twitter-bearer").val()
+      })
+      socket.on("piterbot_keys_updated", () => {
+        $("#alert-space").attr("class", "alert alert-success")
+        $("#alert-space").attr("role", "alert")
+        $("#alert-space").text("Keys successfully updated!")
+      })
+    })
+  </script>
+</body>
+</html>

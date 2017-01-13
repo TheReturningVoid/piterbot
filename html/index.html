@@ -1,0 +1,46 @@
+<html>
+<head>
+  <title>piterbot - settings</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" href="http://bootswatch.com/slate/bootstrap.min.css" />
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/jquery.min.js"></script>
+  <style>
+  body {
+    padding-top: 70px;
+  }
+  </style>
+</head>
+<body>
+  <nav class="navbar-default navbar navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#top-navbar-collapse" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar" />
+          <span class="icon-bar" />
+          <span class="icon-bar" />
+        </button>
+        <a class="navbar-brand" href="/">Piterbot</a>
+      </div>
+      <div class="navbar-collapse collapse" id="top-navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Logs</a></li>
+          <li><a href="/settings">Settings</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <h1>Piterbot Control Panel</h1>
+    <h3>Logs</h3>
+    <textarea id="logs-textarea" readonly cols="200" rows="30"></textarea>
+  </div>
+  <script>
+    var socket = io()
+    socket.on("piterbot_log_message", msg => {
+      $("#logs-textarea").val(`${$("#logs-textarea").val()}${msg}\n`)
+    })
+  </script>
+</body>
+</html>
