@@ -18,8 +18,13 @@ const io = require("socket.io")(http)
 
 // Load API keys
 var apiKeys = { }
-
-apiKeys = JSON.parse(fs.readFileSync("keys.json", "utf8"))
+try {
+  apiKeys = JSON.parse(fs.readFileSync("keys.json", "utf8"))
+} catch (err) {
+  console.log("ni keys.json, mekin dafult...")
+  apiKeys = { }
+  fs.writeFileSync("keys.json", JSON.stringify(apiKeys, null, 2))
+}
 
 // Inclue web apis
 const piter = new Eris(apiKeys.discord)
